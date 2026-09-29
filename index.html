@@ -46,7 +46,6 @@
     #screensaver {
         position: fixed;
         top: 0; left: 0; width: 100vw; height: 100vh;
-        /* UPDATED: Matches the main app's blue gradient instead of black */
         background: linear-gradient(135deg, #003366 0%, #001f3f 100%);
         z-index: 5000;
         cursor: pointer;
@@ -56,6 +55,10 @@
         align-items: center;
         border: none;
         padding: 0;
+    }
+
+    #screensaver picture {
+        display: contents;
     }
     
     #screensaver img { 
@@ -271,7 +274,10 @@
 <body>
 
     <button id="screensaver" onclick="showMenu()" aria-label="Start Library Nest Experience" tabindex="0">
-        <img src="./screensaver2.gif" alt="" aria-hidden="true">
+        <picture aria-hidden="true">
+            <source media="(max-width: 768px)" srcset="./screensaver2.gif">
+            <img src="./screensaver.gif" alt="">
+        </picture>
         <div id="screensaver-text" aria-hidden="true">Click to continue</div>
     </button>
 
