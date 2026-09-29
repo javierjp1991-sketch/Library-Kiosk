@@ -46,7 +46,8 @@
     #screensaver {
         position: fixed;
         top: 0; left: 0; width: 100vw; height: 100vh;
-        background-color: black; /* Acts as the letterbox background when image shrinks */
+        /* UPDATED: Matches the main app's blue gradient instead of black */
+        background: linear-gradient(135deg, #003366 0%, #001f3f 100%);
         z-index: 5000;
         cursor: pointer;
         display: flex;
@@ -61,7 +62,7 @@
         position: absolute; 
         top: 0; left: 0;
         width: 100%; height: 100%; 
-        object-fit: contain; /* Changed from 'cover' to 'contain' so it never crops */
+        object-fit: contain; 
         opacity: 0.8; 
     }
 
@@ -243,7 +244,6 @@
     
     iframe { width: 100%; height: 100%; border: none; display: none; }
     
-    /* Bulletproofed Image Viewer for JPEGs */
     #content-image {
         display: none;
         width: 100%;
