@@ -161,7 +161,7 @@
         height: 170px;
         width: auto;
         border-radius: 5px;
-        display: block; /* prevents bottom gap inside button */
+        display: block; 
     }
 
     .magazine-cover-btn:hover {
@@ -199,7 +199,7 @@
         transform: translateY(-6px);
     }
 
-    /* --- 6. MODAL & QR --- */
+    /* --- 6. MODAL & VIEWERS --- */
     #universal-modal {
         display: none;
         position: fixed;
@@ -213,8 +213,8 @@
 
     .modal-box { 
         width: 90%; 
-        max-width: 600px;
-        height: auto;
+        max-width: 800px; 
+        height: 85vh; 
         padding: 40px; 
         background: white; 
         border-radius: 15px; 
@@ -240,13 +240,23 @@
         z-index: 100; 
     }
     
-    iframe { width: 100%; height: 80vh; border: none; }
+    iframe { width: 100%; height: 100%; border: none; display: none; }
+    
+    /* Dedicated Image Viewer for JPEGs */
+    #content-image {
+        display: none;
+        width: 100%;
+        height: 100%;
+        object-fit: contain; 
+        border-radius: 8px;
+    }
     
     #qr-container { 
         display: none; 
         text-align: center; 
         color: #333; 
         width: 100%; 
+        height: 100%;
         flex-direction: column; 
         align-items: center; 
         justify-content: center; 
@@ -281,13 +291,14 @@
 
     <!-- ADA: Screensaver converted to a button for keyboard interaction -->
     <button id="screensaver" onclick="showMenu()" aria-label="Start Library Nest Experience" tabindex="0">
-        <!-- ADA: Decorative image hidden from screen readers -->
-        <img src="screensaver.gif" alt="" aria-hidden="true">
+        <img src="screensaver.png" alt="" aria-hidden="true">
         <div id="screensaver-text" aria-hidden="true">Click to continue</div>
     </button>
 
     <!-- ADA: Main content area marked semantically -->
     <main id="menu" aria-hidden="true">
+        <img src="hcc-logo.png" alt="HCC Logo" style="width: 280px; margin-bottom: 10px;">
+        
         <h1>Welcome to the Library Nest</h1>
         <p class="subtitle">Your gateway to research, resources, and academic success</p>
 
@@ -300,8 +311,8 @@
             <button class="pill-btn" onclick="openPage('https://library.hccs.edu/about_us/events')">Events</button>
             <button class="pill-btn" onclick="openQR('https://research.ebsco.com/c/34a5lu/search/results?limiters=&q=&auth-callid=ced22907-cb29-45df-956d-647702b4fcb4', 'Library Catalog')">Catalog Search</button>
             
-            <!-- Updated How to Print Button linking to the PDF -->
-            <button class="pill-btn" onclick="openPage('Library Printing Guide (1).pdf')">How to Print</button>
+            <!-- Uses the openImage function to properly fit the static JPEG -->
+            <button class="pill-btn" onclick="openImage('printing-guide.jpg', 'How to Print Guide')">How to Print</button>
         </nav>
 
         <!-- ADA: Interactive images wrapped in buttons for keyboard access -->
@@ -346,8 +357,11 @@
             <h2 id="modal-title" class="sr-only">Resource Viewer</h2>
             <button class="close-btn" onclick="closeAll()" aria-label="Close dialog">✕</button>
             
-            <!-- ADA: Title added to iframe -->
+            <!-- Standard URL iframe Viewer -->
             <iframe id="content-frame" title="Library Resource Content" src="about:blank"></iframe>
+
+            <!-- Dedicated Image Viewer for the Printing Guide -->
+            <img id="content-image" src="" alt="Viewing Document">
             
             <div id="qr-container">
                 <img id="qr-image" src="" alt="QR code to access the selected resource">
@@ -369,6 +383,7 @@
         var menu = document.getElementById('menu');
         var modal = document.getElementById('universal-modal');
         var frame = document.getElementById('content-frame');
+        var contentImage = document.getElementById('content-image');
         var qrContainer = document.getElementById('qr-container');
         var qrImage = document.getElementById('qr-image');
         var qrTitle = document.getElementById('qr-title');
@@ -390,17 +405,36 @@
         function openPage(url) { 
             lastFocusedElement = document.activeElement;
             qrContainer.style.display = 'none'; 
+            contentImage.style.display = 'none';
             frame.style.display = 'block'; 
+            
             frame.src = url; 
             modal.style.display = 'flex'; 
             modal.setAttribute('aria-hidden', 'false');
-            document.querySelector('.close-btn').focus(); // Move focus into modal
+            document.querySelector('.close-btn').focus(); 
+            resetTimer(); 
+        }
+
+        // Handles local JPEGs explicitly to prevent zoom/scroll issues
+        function openImage(url, altText) {
+            lastFocusedElement = document.activeElement;
+            qrContainer.style.display = 'none'; 
+            frame.style.display = 'none'; 
+            
+            contentImage.src = url;
+            contentImage.alt = altText || "Viewing Image";
+            contentImage.style.display = 'block'; 
+
+            modal.style.display = 'flex'; 
+            modal.setAttribute('aria-hidden', 'false');
+            document.querySelector('.close-btn').focus(); 
             resetTimer(); 
         }
 
         function openQR(url, title) { 
             lastFocusedElement = document.activeElement;
             frame.style.display = 'none'; 
+            contentImage.style.display = 'none';
             qrContainer.style.display = 'flex'; 
             
             qrTitle.innerText = title;
@@ -413,7 +447,7 @@
             
             modal.style.display = 'flex'; 
             modal.setAttribute('aria-hidden', 'false');
-            document.querySelector('.close-btn').focus(); // Move focus into modal
+            document.querySelector('.close-btn').focus(); 
             resetTimer(); 
         }
 
@@ -421,6 +455,10 @@
             modal.style.display = 'none'; 
             modal.setAttribute('aria-hidden', 'true');
             frame.src = 'about:blank'; 
+            frame.style.display = 'none';
+            qrContainer.style.display = 'none';
+            contentImage.style.display = 'none';
+            contentImage.src = '';
             
             // ADA: Return focus to where the user was before opening the modal
             if(lastFocusedElement) {
@@ -452,7 +490,6 @@
             if (e.key === 'Tab') {
                 const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
                 const firstElement = focusableElements[0];
-                // In iframe mode, there might only be the close button accessible directly to the parent DOM
                 const lastElement = focusableElements[focusableElements.length - 1];
 
                 if (e.shiftKey && document.activeElement === firstElement) {
