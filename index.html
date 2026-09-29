@@ -46,7 +46,7 @@
     #screensaver {
         position: fixed;
         top: 0; left: 0; width: 100vw; height: 100vh;
-        background-color: black;
+        background-color: black; /* Acts as the letterbox background when image shrinks */
         z-index: 5000;
         cursor: pointer;
         display: flex;
@@ -61,7 +61,7 @@
         position: absolute; 
         top: 0; left: 0;
         width: 100%; height: 100%; 
-        object-fit: cover; 
+        object-fit: contain; /* Changed from 'cover' to 'contain' so it never crops */
         opacity: 0.8; 
     }
 
@@ -222,6 +222,7 @@
         overflow: hidden; 
         display: flex; 
         flex-direction: column;
+        justify-content: center;
         align-items: center;
     }
     
@@ -242,11 +243,12 @@
     
     iframe { width: 100%; height: 100%; border: none; display: none; }
     
-    /* Dedicated Image Viewer for JPEGs */
+    /* Bulletproofed Image Viewer for JPEGs */
     #content-image {
         display: none;
         width: 100%;
         height: 100%;
+        max-height: 100%; 
         object-fit: contain; 
         border-radius: 8px;
     }
@@ -264,40 +266,17 @@
     
     #qr-image { width: 250px; height: 250px; margin-bottom: 20px; }
 
-    /* BUTTON IN POPUP */
-    .direct-link-btn {
-        display: inline-block;
-        margin-top: 20px;
-        background: #FFC107;
-        color: #003366;
-        padding: 15px 40px;
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 1.2rem;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        transition: transform 0.2s;
-        border: 1px solid #e0a800;
-    }
-
-    .direct-link-btn:hover {
-        transform: scale(1.05);
-        background: #ffcd39;
-    }
-
 </style>
 </head>
 <body>
 
-    <!-- ADA: Screensaver converted to a button for keyboard interaction -->
     <button id="screensaver" onclick="showMenu()" aria-label="Start Library Nest Experience" tabindex="0">
-        <img src="screensaver.gif" alt="" aria-hidden="true">
+        <img src="./screensaver.gif" alt="" aria-hidden="true">
         <div id="screensaver-text" aria-hidden="true">Click to continue</div>
     </button>
 
-    <!-- ADA: Main content area marked semantically -->
     <main id="menu" aria-hidden="true">
-        <img src="hcc-logo.png" alt="HCC Logo" style="width: 280px; margin-bottom: 10px;">
+        <img src="./hcc-logo.jpg" alt="HCC Logo" style="width: 280px; margin-bottom: 10px;">
         
         <h1>Welcome to the Library Nest</h1>
         <p class="subtitle">Your gateway to research, resources, and academic success</p>
@@ -310,72 +289,54 @@
             <button class="pill-btn" onclick="openPage('https://library.hccs.edu/research_writing/style_guides')">Citation Station</button>
             <button class="pill-btn" onclick="openPage('https://library.hccs.edu/about_us/events')">Events</button>
             <button class="pill-btn" onclick="openQR('https://research.ebsco.com/c/34a5lu/search/results?limiters=&q=&auth-callid=ced22907-cb29-45df-956d-647702b4fcb4', 'Library Catalog')">Catalog Search</button>
-            
-            <!-- Uses the openImage function to properly fit the static JPEG -->
-            <button class="pill-btn" onclick="openImage('printing-guide.jpg', 'How to Print Guide')">How to Print</button>
+            <button class="pill-btn" onclick="openImage('./printing-guide.jpg', 'How to Print Guide')">How to Print</button>
         </nav>
 
-        <!-- ADA: Interactive images wrapped in buttons for keyboard access -->
         <section class="magazine-grid" aria-label="Magazines">
             <button class="magazine-cover-btn" onclick="openQR('https://flipster.ebsco.com/c/bm4kf4/results?limiters=&type=0&db=eon&q=HJ+NGE&auth-callid=462b1a66-e322-46e9-bfc6-627574c6851ae', 'National Geographic')">
                 <img alt="National Geographic" src="https://d2jv02qf7xgjwx.cloudfront.net/accounts/358453/images/national_geographic.png" />
             </button>
-            
             <button class="magazine-cover-btn" onclick="openQR('https://flipster.ebsco.com/c/bm4kf4/results?limiters=&type=0&db=eon&q=HJ+NYK&auth-callid=3ffa76bf-0849-4106-86e7-297352a913a6', 'The New Yorker')">
                 <img alt="The New Yorker" src="https://d2jv02qf7xgjwx.cloudfront.net/accounts/358453/images/new_yorker.png" />
             </button>
-            
             <button class="magazine-cover-btn" onclick="openQR('https://flipster.ebsco.com/c/bm4kf4/results?limiters=&type=0&db=eon&q=HJ+BON&auth-callid=23836537-4c8f-4b74-b26f-842f793d505a', 'Bon Appétit')">
                 <img alt="Bon Appétit" src="https://d2jv02qf7xgjwx.cloudfront.net/accounts/358453/images/bon_appetit.png" />
             </button>
-            
             <button class="magazine-cover-btn" onclick="openQR('https://flipster.ebsco.com/c/bm4kf4/results?limiters=&type=0&db=eon&q=HJ+BHG&auth-callid=8768cf45-ad5f-42e3-a4f3-a406d567c18ce', 'Better Homes & Gardens')">
                 <img alt="Better Homes and Gardens" src="https://d2jv02qf7xgjwx.cloudfront.net/accounts/358453/images/better_homes_and_garden.png" />
             </button>
-            
             <button class="magazine-cover-btn" onclick="openQR('https://flipster.ebsco.com/c/bm4kf4/results?limiters=&type=0&db=eon&q=HJ+BLL&auth-callid=c88b09bc-d915-4d23-a532-3f22c1885ee9', 'The Booklist')">
                 <img alt="The Booklist" src="https://d2jv02qf7xgjwx.cloudfront.net/accounts/358453/images/booklist.png" />
             </button>
-            
             <button class="magazine-cover-btn" onclick="openQR('https://flipster.ebsco.com/c/bm4kf4/results?limiters=&type=0&db=eon&q=HJ+VOG&auth-callid=d839dd59-f1ea-474b-b332-9826adc2b48f', 'Vogue')">
                 <img alt="Vogue" src="https://d2jv02qf7xgjwx.cloudfront.net/accounts/358453/images/vogue.png" />
             </button>
-            
             <button class="magazine-cover-btn" onclick="openQR('https://flipster.ebsco.com/c/bm4kf4/results?limiters=&type=0&db=eon&q=HJ+B3JY&auth-callid=c34132d8-5f08-4575-9995-276dbb40dd3b', 'Essence')">
                 <img alt="Essence" src="https://d2jv02qf7xgjwx.cloudfront.net/accounts/358453/images/essence.png" />
             </button>
-            
             <button class="magazine-box" onclick="openQR('https://flipster.ebsco.com/c/bm4kf4', 'All Magazines')">
                 <span>View All Magazines</span>
             </button>
         </section>
     </main>
 
-    <!-- ADA: Modal updated with roles, aria-labels, and focus trapping logic -->
     <div id="universal-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
         <div class="modal-box">
             <h2 id="modal-title" class="sr-only">Resource Viewer</h2>
             <button class="close-btn" onclick="closeAll()" aria-label="Close dialog">✕</button>
             
-            <!-- Standard URL iframe Viewer -->
             <iframe id="content-frame" title="Library Resource Content" src="about:blank"></iframe>
-
-            <!-- Dedicated Image Viewer for the Printing Guide -->
+            
             <img id="content-image" src="" alt="Viewing Document">
             
             <div id="qr-container">
                 <img id="qr-image" src="" alt="QR code to access the selected resource">
                 <h2 id="qr-title" style="color:#003366; margin-bottom:5px;">Scan to Open</h2>
-                <p style="color:#666; font-size:1.1rem; margin-bottom:20px;">Use your phone camera or click below.</p>
-                
-                <a id="direct-link" href="#" target="_blank" rel="noopener noreferrer" class="direct-link-btn" aria-label="Open resource in a new tab">
-                    Open on Device
-                </a>
+                <p style="color:#666; font-size:1.1rem; margin-bottom:0;">Use your phone camera to scan.</p>
             </div>
         </div>
     </div>
 
-    <!-- Live region for screen reader idle announcements -->
     <div id="a11y-announcer" aria-live="polite" class="sr-only"></div>
 
     <script>
@@ -387,18 +348,17 @@
         var qrContainer = document.getElementById('qr-container');
         var qrImage = document.getElementById('qr-image');
         var qrTitle = document.getElementById('qr-title');
-        var directLink = document.getElementById('direct-link');
         var announcer = document.getElementById('a11y-announcer');
         
         var idleTimer;
-        var lastFocusedElement; // ADA: Track focus to return it when modal closes
+        var lastFocusedElement; 
 
         function showMenu() { 
             screensaver.style.display = 'none'; 
             screensaver.setAttribute('aria-hidden', 'true');
             menu.style.display = 'block'; 
             menu.setAttribute('aria-hidden', 'false');
-            document.getElementById('main-chat-btn').focus(); // Move focus to menu
+            document.getElementById('main-chat-btn').focus();
             resetTimer(); 
         }
         
@@ -415,7 +375,6 @@
             resetTimer(); 
         }
 
-        // Handles local JPEGs explicitly to prevent zoom/scroll issues
         function openImage(url, altText) {
             lastFocusedElement = document.activeElement;
             qrContainer.style.display = 'none'; 
@@ -440,11 +399,6 @@
             qrTitle.innerText = title;
             qrImage.src = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + encodeURIComponent(url);
             
-            // ADA: Descriptive link text instead of "Click Here"
-            directLink.innerText = "Open " + title;
-            directLink.href = url;
-            directLink.setAttribute('aria-label', "Open " + title + " in a new window");
-            
             modal.style.display = 'flex'; 
             modal.setAttribute('aria-hidden', 'false');
             document.querySelector('.close-btn').focus(); 
@@ -460,7 +414,6 @@
             contentImage.style.display = 'none';
             contentImage.src = '';
             
-            // ADA: Return focus to where the user was before opening the modal
             if(lastFocusedElement) {
                 lastFocusedElement.focus();
             }
@@ -478,10 +431,9 @@
 
         function resetTimer() {
             clearTimeout(idleTimer);
-            idleTimer = setTimeout(resetToScreensaver, 180000); // 3 minutes
+            idleTimer = setTimeout(resetToScreensaver, 180000); 
         }
 
-        // ADA: Focus Trap for the Modal (Ensures keyboard users don't tab out of the popup into the background)
         modal.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeAll();
@@ -502,7 +454,6 @@
             }
         });
 
-        // ADA: Added keydown to reset timer so keyboard interactions prevent idle timeout
         document.body.addEventListener('click', resetTimer);
         document.body.addEventListener('touchstart', resetTimer);
         document.body.addEventListener('keydown', resetTimer);
