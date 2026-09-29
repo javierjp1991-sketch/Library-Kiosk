@@ -13,7 +13,7 @@
 <meta name="theme-color" content="#003366">
 
 <!-- Inline Web App Manifest for Home Screen Installation -->
-<link rel="manifest" href='data:application/manifest+json,{"name":"The Library Nest","short_name":"LibraryNest","start_url":".","display":"standalone","background_color":"#003366","theme_color":"#003366","icons":[{"src":"./hcc-logo.png","sizes":"192x192","type":"image/jpeg"}]}'>
+<link rel="manifest" href='data:application/manifest+json,{"name":"The Library Nest","short_name":"LibraryNest","start_url":".","display":"standalone","background_color":"#003366","theme_color":"#003366","icons":[{"src":"./hcc-logo.jpg","sizes":"192x192","type":"image/jpeg"}]}'>
 
 <style>
     /* --- 1. GLOBAL RESET & ACCESSIBILITY --- */
@@ -328,22 +328,52 @@
         color: #003366;
         border-bottom: 2px solid #003366;
         padding-bottom: 8px;
+        margin-bottom: 4px;
+    }
+
+    .custom-modal-content .subheading {
+        color: #555;
+        font-size: 1rem;
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-style: italic;
     }
 
     .custom-modal-content ol, .custom-modal-content ul {
         line-height: 1.6;
-        font-size: 1.1rem;
+        font-size: 1.05rem;
+    }
+
+    .print-rates-box {
+        background-color: #f0f4f8;
+        border-left: 4px solid #003366;
+        padding: 10px 15px;
+        margin: 10px 0 15px 0;
+        border-radius: 4px;
+        font-size: 0.95rem;
+    }
+
+    .print-qr-card {
+        background-color: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .print-qr-img {
-        max-width: 220px;
+        max-width: 160px;
         height: auto;
         display: block;
-        margin: 15px auto;
+        margin: 10px auto;
         border: 1px solid #ddd;
         border-radius: 8px;
         padding: 5px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        background: #fff;
     }
 
     .modal-action-btn {
@@ -389,7 +419,7 @@
             📱 Save as App
         </button>
 
-        <img src="./hcc-logo.png" alt="HCC Logo" style="width: 280px; margin-bottom: 10px;">
+        <img src="./hcc-logo.jpg" alt="HCC Logo" style="width: 280px; margin-bottom: 10px;">
         
         <h1>Welcome to the Library Nest</h1>
         <p class="subtitle">Your gateway to research, resources, and academic success</p>
@@ -457,16 +487,45 @@
             <!-- HOW TO PRINT CONTAINER -->
             <div id="print-guide-container" class="custom-modal-content">
                 <h2>🖨️ How to Print at the Library</h2>
+                <p class="subheading">A Guide to using the Eagle Print system</p>
+                
                 <ol>
-                    <li>Log into any library computer using your student ID credentials.</li>
-                    <li>Open your document and select <strong>Print</strong>.</li>
-                    <li>Choose the library printer from the available list.</li>
-                    <li>Scan the QR code below or visit the print release station to release your print job:</li>
+                    <li>
+                        <strong>Log in to a computer</strong><br>
+                        Sign in to any library computer using your student username and password.
+                    </li>
+                    <li style="margin-top: 12px;">
+                        <strong>Add funds to Eagle Print</strong><br>
+                        Minimize your open windows to locate the green Eagle Print balance widget on the desktop. Click the yellow <strong>"Details"</strong> link, enter your password, and add funds using a credit card.<br>
+                        <em style="font-size: 0.9rem; color: #555;">(Note: If you are paying with cash, you can use the cash machine located near the printer instead.)</em>
+                        
+                        <div class="print-rates-box">
+                            <strong>Printing Rates:</strong><br>
+                            • Black &amp; White: <strong>$0.10</strong> per page<br>
+                            • Color: <strong>$0.50</strong> per page
+                        </div>
+                    </li>
+                    <li style="margin-top: 12px;">
+                        <strong>Send to printer</strong><br>
+                        Print your document and select the <strong>Eagle Print</strong> printer from the drop-down menu.
+                    </li>
+                    <li style="margin-top: 12px;">
+                        <strong>Release your document</strong><br>
+                        Walk over to the printer. The separate print release screen is located directly on the machine. Log in by typing your username and password on the screen.
+                    </li>
+                    <li style="margin-top: 12px;">
+                        <strong>Print and pick up</strong><br>
+                        Select your print job on the display screen, click <strong>"Print"</strong> to release it, and collect your documents from the tray.
+                    </li>
                 </ol>
-                <img src="./Kaltura print QR.png" alt="Kaltura Print QR Code" class="print-qr-img">
-                <p style="text-align: center; color: #555; font-size: 0.95rem;">
-                    <em>Need help printing? Visit the front desk to speak with a staff member.</em>
-                </p>
+
+                <div class="print-qr-card">
+                    <strong style="color: #003366; font-size: 1.1rem;">Need more help?</strong>
+                    <p style="margin: 5px 0; font-size: 0.95rem; color: #444;">
+                        Scan this QR code with your smartphone camera to watch a step-by-step video tutorial on how to use the printing system.
+                    </p>
+                    <img src="./Kaltura print QR.png" alt="Video Tutorial QR Code" class="print-qr-img">
+                </div>
             </div>
 
             <!-- INSTALL APP GUIDE CONTAINER -->
@@ -504,7 +563,7 @@
         var screensaver = document.getElementById('screensaver');
         var menu = document.getElementById('menu');
         var modal = document.getElementById('universal-modal');
-        var frame = document.getElementById('content-frame');
+        var contentFrame = document.getElementById('content-frame');
         var contentImage = document.getElementById('content-image');
         var qrContainer = document.getElementById('qr-container');
         var qrImage = document.getElementById('qr-image');
@@ -528,7 +587,7 @@
         }
 
         function hideAllModalViews() {
-            frame.style.display = 'none';
+            contentFrame.style.display = 'none';
             contentImage.style.display = 'none';
             qrContainer.style.display = 'none';
             printGuideContainer.style.display = 'none';
@@ -538,9 +597,9 @@
         function openPage(url) { 
             lastFocusedElement = document.activeElement;
             hideAllModalViews();
-            frame.style.display = 'block'; 
+            contentFrame.style.display = 'block'; 
             
-            frame.src = url; 
+            contentFrame.src = url; 
             modal.style.display = 'flex'; 
             modal.setAttribute('aria-hidden', 'false');
             document.querySelector('.close-btn').focus(); 
@@ -623,7 +682,7 @@
         function closeAll() { 
             modal.style.display = 'none'; 
             modal.setAttribute('aria-hidden', 'true');
-            frame.src = 'about:blank'; 
+            contentFrame.src = 'about:blank'; 
             contentImage.src = '';
             hideAllModalViews();
             
