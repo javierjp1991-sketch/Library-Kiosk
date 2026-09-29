@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Library Nest - Kiosk Interface</title>
+
+<!-- Web App / PWA Meta Tags -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Library Nest">
+<meta name="theme-color" content="#003366">
+
+<!-- Inline Web App Manifest for Home Screen Installation -->
+<link rel="manifest" href='data:application/manifest+json,{"name":"The Library Nest","short_name":"LibraryNest","start_url":".","display":"standalone","background_color":"#003366","theme_color":"#003366","icons":[{"src":"./hcc-logo.jpg","sizes":"192x192","type":"image/jpeg"}]}'>
+
 <style>
     /* --- 1. GLOBAL RESET & ACCESSIBILITY --- */
     * { box-sizing: border-box; }
@@ -66,7 +77,7 @@
         top: 0; left: 0;
         width: 100%; height: 100%; 
         object-fit: cover; 
-        opacity: 0.8; 
+        opacity: 1; 
     }
 
     #screensaver-text {
@@ -132,15 +143,28 @@
         margin-bottom: 30px;
     }
 
-    .pill-row { display: flex; justify-content: center; gap: 20px; margin-bottom: 40px; flex-wrap: wrap; }
+    .pill-row { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
     .pill-btn {
         background-color: rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.4);
         color: white;
-        padding: 15px 35px;
+        padding: 15px 30px;
         border-radius: 40px;
         font-size: 1.1rem;
         cursor: pointer;
+        text-decoration: none;
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .pill-btn:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+    }
+
+    .pill-btn-accent {
+        background-color: #FFC107;
+        color: #003366;
+        border: none;
+        font-weight: bold;
     }
 
     /* --- 5. MAGAZINE GRID --- */
@@ -219,7 +243,7 @@
         width: 90%; 
         max-width: 800px; 
         height: 85vh; 
-        padding: 40px; 
+        padding: 30px; 
         background: white; 
         border-radius: 15px; 
         position: relative; 
@@ -228,6 +252,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        color: #333;
     }
     
     .close-btn { 
@@ -252,7 +277,7 @@
         width: 100%;
         height: 100%;
         max-height: 100%; 
-        object-fit: cover; 
+        object-fit: contain; 
         border-radius: 8px;
     }
     
@@ -267,7 +292,59 @@
         justify-content: center; 
     }
     
-    #qr-image { width: 250px; height: 250px; margin-bottom: 20px; }
+    #qr-image { width: 220px; height: 220px; margin-bottom: 15px; }
+
+    /* Custom Content Modal Layout (Printing Guide & Install App Guide) */
+    .custom-modal-content {
+        display: none;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        padding: 10px 15px;
+        text-align: left;
+        color: #003366;
+    }
+
+    .custom-modal-content h2 {
+        margin-top: 0;
+        color: #003366;
+        border-bottom: 2px solid #003366;
+        padding-bottom: 8px;
+    }
+
+    .custom-modal-content ol, .custom-modal-content ul {
+        line-height: 1.6;
+        font-size: 1.1rem;
+    }
+
+    .print-qr-img {
+        max-width: 220px;
+        height: auto;
+        display: block;
+        margin: 15px auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 5px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .modal-action-btn {
+        display: inline-block;
+        background: #003366;
+        color: white;
+        padding: 12px 28px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin-top: 15px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+    .modal-action-btn:hover {
+        background: #001f3f;
+    }
 
 </style>
 </head>
@@ -282,7 +359,7 @@
     </button>
 
     <main id="menu" aria-hidden="true">
-        <img src="./hcc-logo.png" alt="HCC Logo" style="width: 280px; margin-bottom: 10px;">
+        <img src="./hcc-logo.jpg" alt="HCC Logo" style="width: 280px; margin-bottom: 10px;">
         
         <h1>Welcome to the Library Nest</h1>
         <p class="subtitle">Your gateway to research, resources, and academic success</p>
@@ -295,7 +372,8 @@
             <button class="pill-btn" onclick="openPage('https://library.hccs.edu/research_writing/style_guides')">Citation Station</button>
             <button class="pill-btn" onclick="openPage('https://library.hccs.edu/about_us/events')">Events</button>
             <button class="pill-btn" onclick="openQR('https://research.ebsco.com/c/34a5lu/search/results?limiters=&q=&auth-callid=ced22907-cb29-45df-956d-647702b4fcb4', 'Library Catalog')">Catalog Search</button>
-            <button class="pill-btn" onclick="openImage('./printing-guide.jpg', 'How to Print Guide')">How to Print</button>
+            <button class="pill-btn" onclick="openPrintGuide()">How to Print</button>
+            <button class="pill-btn pill-btn-accent" onclick="openInstallGuide()">📱 Save as App</button>
         </nav>
 
         <section class="magazine-grid" aria-label="Magazines">
@@ -326,6 +404,7 @@
         </section>
     </main>
 
+    <!-- UNIVERSAL MODAL -->
     <div id="universal-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
         <div class="modal-box">
             <h2 id="modal-title" class="sr-only">Resource Viewer</h2>
@@ -335,11 +414,58 @@
             
             <img id="content-image" src="" alt="Viewing Document">
             
+            <!-- QR CODE DISPLAY CONTAINER -->
             <div id="qr-container">
                 <img id="qr-image" src="" alt="QR code to access the selected resource">
                 <h2 id="qr-title" style="color:#003366; margin-bottom:5px;">Scan to Open</h2>
-                <p style="color:#666; font-size:1.1rem; margin-bottom:0;">Use your phone camera to scan.</p>
+                <p style="color:#666; font-size:1.1rem; margin-bottom:10px;">Use your phone camera to scan.</p>
+                <!-- NEW OPEN BUTTON UNDER QR CODE -->
+                <a id="qr-open-btn" class="modal-action-btn" href="#" target="_blank" rel="noopener noreferrer">
+                    🔗 Open in New Tab
+                </a>
             </div>
+
+            <!-- HOW TO PRINT CONTAINER -->
+            <div id="print-guide-container" class="custom-modal-content">
+                <h2>🖨️ How to Print at the Library</h2>
+                <ol>
+                    <li>Log into any library computer using your student ID credentials.</li>
+                    <li>Open your document and select <strong>Print</strong>.</li>
+                    <li>Choose the library printer from the available list.</li>
+                    <li>Scan the QR code below or visit the print release station to release your print job:</li>
+                </ol>
+                <img src="./Kaltura print QR.png" alt="Kaltura Print QR Code" class="print-qr-img">
+                <p style="text-align: center; color: #555; font-size: 0.95rem;">
+                    <em>Need help printing? Visit the front desk to speak with a staff member.</em>
+                </p>
+            </div>
+
+            <!-- INSTALL APP GUIDE CONTAINER -->
+            <div id="install-guide-container" class="custom-modal-content">
+                <h2>📱 Add Library Nest to Your Home Screen</h2>
+                <p>Access library resources instantly from your phone or tablet by saving this web app!</p>
+                
+                <h3 style="color:#003366; margin-top:15px;">iOS (iPhone / iPad)</h3>
+                <ol>
+                    <li>Tap the <strong>Share</strong> button (the box with an upward arrow) in Safari.</li>
+                    <li>Scroll down and tap <strong>Add to Home Screen</strong>.</li>
+                    <li>Tap <strong>Add</strong> in the top right corner.</li>
+                </ol>
+
+                <h3 style="color:#003366; margin-top:15px;">Android (Chrome)</h3>
+                <ol>
+                    <li>Tap the <strong>Three Dots</strong> menu icon in the top right.</li>
+                    <li>Tap <strong>Add to Home screen</strong> or <strong>Install app</strong>.</li>
+                    <li>Follow the onscreen prompt to confirm.</li>
+                </ol>
+
+                <div style="text-align: center; margin-top: 20px;" id="pWA-native-install-wrapper">
+                    <button id="pwa-install-btn" class="modal-action-btn" style="display:none;" onclick="triggerNativeInstall()">
+                        📲 Install Directly to Device
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -354,10 +480,14 @@
         var qrContainer = document.getElementById('qr-container');
         var qrImage = document.getElementById('qr-image');
         var qrTitle = document.getElementById('qr-title');
+        var qrOpenBtn = document.getElementById('qr-open-btn');
+        var printGuideContainer = document.getElementById('print-guide-container');
+        var installGuideContainer = document.getElementById('install-guide-container');
         var announcer = document.getElementById('a11y-announcer');
         
         var idleTimer;
         var lastFocusedElement; 
+        var deferredPrompt; // PWA prompt event
 
         function showMenu() { 
             screensaver.style.display = 'none'; 
@@ -367,11 +497,18 @@
             document.getElementById('main-chat-btn').focus();
             resetTimer(); 
         }
+
+        function hideAllModalViews() {
+            frame.style.display = 'none';
+            contentImage.style.display = 'none';
+            qrContainer.style.display = 'none';
+            printGuideContainer.style.display = 'none';
+            installGuideContainer.style.display = 'none';
+        }
         
         function openPage(url) { 
             lastFocusedElement = document.activeElement;
-            qrContainer.style.display = 'none'; 
-            contentImage.style.display = 'none';
+            hideAllModalViews();
             frame.style.display = 'block'; 
             
             frame.src = url; 
@@ -383,8 +520,7 @@
 
         function openImage(url, altText) {
             lastFocusedElement = document.activeElement;
-            qrContainer.style.display = 'none'; 
-            frame.style.display = 'none'; 
+            hideAllModalViews();
             
             contentImage.src = url;
             contentImage.alt = altText || "Viewing Image";
@@ -398,27 +534,69 @@
 
         function openQR(url, title) { 
             lastFocusedElement = document.activeElement;
-            frame.style.display = 'none'; 
-            contentImage.style.display = 'none';
+            hideAllModalViews();
             qrContainer.style.display = 'flex'; 
             
             qrTitle.innerText = title;
             qrImage.src = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + encodeURIComponent(url);
             
+            // Set URL for the new open button
+            qrOpenBtn.href = url;
+
             modal.style.display = 'flex'; 
             modal.setAttribute('aria-hidden', 'false');
             document.querySelector('.close-btn').focus(); 
             resetTimer(); 
         }
 
+        function openPrintGuide() {
+            lastFocusedElement = document.activeElement;
+            hideAllModalViews();
+            printGuideContainer.style.display = 'block';
+
+            modal.style.display = 'flex'; 
+            modal.setAttribute('aria-hidden', 'false');
+            document.querySelector('.close-btn').focus(); 
+            resetTimer();
+        }
+
+        function openInstallGuide() {
+            lastFocusedElement = document.activeElement;
+            hideAllModalViews();
+            installGuideContainer.style.display = 'block';
+
+            // Check if native install prompt is available
+            var pwaBtn = document.getElementById('pwa-install-btn');
+            if (deferredPrompt) {
+                pwaBtn.style.display = 'inline-block';
+            } else {
+                pwaBtn.style.display = 'none';
+            }
+
+            modal.style.display = 'flex'; 
+            modal.setAttribute('aria-hidden', 'false');
+            document.querySelector('.close-btn').focus(); 
+            resetTimer();
+        }
+
+        function triggerNativeInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(function(choiceResult) {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        }
+
         function closeAll() { 
             modal.style.display = 'none'; 
             modal.setAttribute('aria-hidden', 'true');
             frame.src = 'about:blank'; 
-            frame.style.display = 'none';
-            qrContainer.style.display = 'none';
-            contentImage.style.display = 'none';
             contentImage.src = '';
+            hideAllModalViews();
             
             if(lastFocusedElement) {
                 lastFocusedElement.focus();
@@ -439,6 +617,12 @@
             clearTimeout(idleTimer);
             idleTimer = setTimeout(resetToScreensaver, 180000); 
         }
+
+        // PWA Install Prompt Listener
+        window.addEventListener('beforeinstallprompt', function(e) {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
 
         modal.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
