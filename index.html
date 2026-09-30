@@ -137,14 +137,14 @@
     }
 
     h1 { 
-        font-size: 3rem; 
-        margin: 0 0 10px 0; 
+        font-size: 2.8rem; 
+        margin: 0 0 8px 0; 
         font-weight: normal; 
         text-shadow: 0 2px 4px rgba(0,0,0,0.5); 
     }
     
     p.subtitle { 
-        font-size: 1.2rem; 
+        font-size: 1.1rem; 
         color: #e0e0e0; 
         margin-bottom: 25px; 
         letter-spacing: 0.5px; 
@@ -158,9 +158,9 @@
         background-color: rgba(255, 255, 255, 0.18);
         border: 1px solid rgba(255, 255, 255, 0.45);
         color: white;
-        padding: 8px 16px;
+        padding: 6px 14px;
         border-radius: 20px;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         font-weight: bold;
         cursor: pointer;
         transition: background 0.2s ease, transform 0.2s ease;
@@ -168,7 +168,7 @@
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        min-height: 44px;
+        min-height: 38px;
         -webkit-tap-highlight-color: transparent;
     }
     .app-corner-btn:hover {
@@ -176,22 +176,33 @@
         transform: translateY(-1px);
     }
 
-    /* --- 4. TOP BUTTONS --- */
+    /* --- 4. PRIMARY VS SECONDARY BUTTONS --- */
+    /* Primary Focal Point: Chat Button */
     .chat-btn {
-        background: #FFC107;
-        color: #003366;
+        background: linear-gradient(135deg, #FFD54F 0%, #FFC107 100%);
+        color: #002244;
         font-family: inherit;
-        font-size: 1.4rem;
-        font-weight: bold;
-        padding: 16px 40px;
-        border: none;
+        font-size: 1.5rem;
+        font-weight: 800;
+        padding: 18px 48px;
+        border: 2px solid #FFE082;
         border-radius: 50px;
         cursor: pointer;
-        box-shadow: 0 4px 20px rgba(255, 193, 7, 0.5);
-        margin-bottom: 25px;
-        min-height: 52px;
+        box-shadow: 0 6px 25px rgba(255, 193, 7, 0.55), 0 0 15px rgba(255, 255, 255, 0.2);
+        margin: 0 auto 30px auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 60px;
         max-width: 100%;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
         -webkit-tap-highlight-color: transparent;
+    }
+    .chat-btn:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 30px rgba(255, 193, 7, 0.7);
+        background: linear-gradient(135deg, #FFE082 0%, #FFCA28 100%);
     }
     .chat-btn:focus-visible {
         outline: 3px solid #ffffff;
@@ -199,80 +210,41 @@
         border-radius: 50px;
     }
 
-    /* Horizontal wrapping pill buttons */
+    /* Compact secondary horizontal wrapping pill buttons */
     .pill-row { 
         display: flex; 
         justify-content: center; 
-        gap: 15px; 
-        margin-bottom: 30px; 
+        align-items: center;
+        gap: 12px; 
+        margin-bottom: 35px; 
         flex-wrap: wrap; 
     }
 
     .pill-btn {
-        background-color: rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.45);
-        color: #ffffff;
-        padding: 14px 26px;
-        border-radius: 40px;
-        font-size: 1.05rem;
-        font-weight: bold;
+        background-color: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        color: #f0f4f8;
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-size: 0.95rem;
+        font-weight: 600;
         cursor: pointer;
         text-decoration: none;
-        transition: background 0.2s ease, transform 0.2s ease;
-        min-height: 48px;
+        transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+        min-height: 42px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         -webkit-tap-highlight-color: transparent;
     }
     .pill-btn:hover {
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.6);
         transform: translateY(-2px);
-    }
-
-    /* --- 5. NEWSPAPER CARD SECTION --- */
-    .newspaper-card {
-        background: rgba(0, 0, 0, 0.22);
-        border: 1px solid rgba(255, 193, 7, 0.4);
-        border-radius: 20px;
-        padding: 20px 25px;
-        margin: 0 auto 35px auto;
-        max-width: 750px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .section-label {
-        font-size: 1.15rem;
-        font-weight: bold;
-        color: #FFC107;
-        margin: 0 0 15px 0;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .newspaper-row {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        flex-wrap: wrap;
-    }
-
-    .newspaper-btn {
-        background: rgba(255, 255, 255, 0.2);
-        border: 2px solid #FFC107;
         color: #ffffff;
-        font-size: 1.05rem;
-        padding: 12px 24px;
-        border-radius: 30px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    .newspaper-btn:hover {
-        background-color: #FFC107;
-        color: #003366;
-        transform: translateY(-2px);
     }
 
-    /* --- 6. MAGAZINE GRID --- */
+    /* --- 5. MAGAZINE GRID --- */
     .magazine-grid { 
         display: flex; 
         flex-wrap: wrap; 
@@ -293,7 +265,7 @@
     }
 
     .magazine-cover-btn img {
-        height: 170px;
+        height: 160px;
         width: auto;
         border-radius: 6px;
         display: block; 
@@ -308,8 +280,8 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 130px;
-        height: 170px;
+        width: 120px;
+        height: 160px;
         background: linear-gradient(145deg, #fafafa, #f0f0f0);
         border: 1px solid #dcdcdc;
         border-radius: 12px;
@@ -338,7 +310,7 @@
         transform: translateY(-6px);
     }
 
-    /* --- 7. MODAL & VIEWERS --- */
+    /* --- 6. MODAL & VIEWERS --- */
     #universal-modal {
         display: none;
         position: fixed;
@@ -373,8 +345,8 @@
         background: #cc0000; 
         color: white; 
         border: none; 
-        width: 48px; 
-        height: 48px; 
+        width: 44px; 
+        height: 44px; 
         border-radius: 50%; 
         font-size: 1.2rem;
         font-weight: bold; 
@@ -430,16 +402,61 @@
     }
 
     .custom-modal-content .subheading {
-        color: #444;
+        color: #555;
         font-size: 1rem;
         margin-top: 0;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         font-style: italic;
     }
 
-    .custom-modal-content ol, .custom-modal-content ul {
-        line-height: 1.6;
-        font-size: 1.05rem;
+    /* NEWS PUBLICATIONS MODAL STYLES */
+    .news-options-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+        margin-top: 15px;
+    }
+
+    .news-card {
+        background: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-left: 5px solid #003366;
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .news-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+
+    .news-card h3 {
+        margin: 0 0 8px 0;
+        color: #003366;
+        font-size: 1.25rem;
+    }
+
+    .news-card p {
+        margin: 0 0 15px 0;
+        color: #555;
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    .news-card .badge {
+        display: inline-block;
+        background: #e8f0fe;
+        color: #003366;
+        font-size: 0.8rem;
+        font-weight: bold;
+        padding: 4px 8px;
+        border-radius: 4px;
+        margin-bottom: 12px;
     }
 
     .print-widget-img {
@@ -504,16 +521,17 @@
         justify-content: center;
         background: #003366;
         color: white;
-        padding: 12px 28px;
+        padding: 12px 24px;
         border-radius: 30px;
         text-decoration: none;
         font-weight: bold;
-        font-size: 1.1rem;
-        margin-top: 15px;
+        font-size: 1rem;
+        margin-top: 10px;
         border: none;
         cursor: pointer;
         transition: background 0.2s ease, transform 0.2s ease;
         min-height: 48px;
+        gap: 6px;
     }
     .modal-action-btn:hover {
         background: #001f3f;
@@ -529,7 +547,7 @@
         background-color: #e0a800;
     }
 
-    /* --- 8. MOBILE RESPONSIVE MEDIA QUERIES --- */
+    /* --- 7. MOBILE RESPONSIVE MEDIA QUERIES --- */
     @media (max-width: 768px) {
         h1 { font-size: 2.2rem; }
         p.subtitle { font-size: 1rem; margin-bottom: 20px; }
@@ -541,42 +559,25 @@
             margin-bottom: 15px;
         }
 
-        /* Clean vertical stacking on phone screens */
-        .pill-row {
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .pill-btn {
-            width: 100%;
-            max-width: 340px;
-        }
-
-        .newspaper-card {
-            padding: 18px 12px;
-            margin-bottom: 25px;
+        .chat-btn {
+            font-size: 1.25rem;
+            padding: 14px 28px;
             width: 100%;
             max-width: 360px;
         }
 
-        .newspaper-row {
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
+        .pill-row {
+            gap: 8px;
+            margin-bottom: 25px;
         }
 
-        .newspaper-btn {
-            width: 100%;
-            max-width: 320px;
+        .pill-btn {
+            font-size: 0.88rem;
+            padding: 8px 14px;
         }
 
-        .chat-btn {
-            font-size: 1.2rem;
-            padding: 14px 24px;
-            width: 100%;
-            max-width: 340px;
+        .news-options-grid {
+            grid-template-columns: 1fr;
         }
 
         .magazine-grid {
@@ -634,29 +635,19 @@
         <h1>Welcome to the Library Nest</h1>
         <p class="subtitle">Your gateway to research, resources, and academic success</p>
 
+        <!-- MOST IMPORTANT PRIMARY BUTTON -->
         <button id="main-chat-btn" class="chat-btn" onclick="openPage('https://hccs.libanswers.com/chat/widget/595c799ce5a5668816bfcf741d79597b', 'Chat with a Librarian')">
             💬 Chat with a Librarian
         </button>
 
+        <!-- SECONDARY COMPACT PILL ROW NAVIGATION -->
         <nav class="pill-row" aria-label="Quick Links Navigation">
             <button class="pill-btn" onclick="openPage('https://library.hccs.edu/research_writing/style_guides', 'Citation Station')">Citation Station</button>
             <button class="pill-btn" onclick="openPage('https://library.hccs.edu/about_us/events', 'Events Calendar')">Events</button>
             <button class="pill-btn" onclick="openQR('https://research.ebsco.com/c/34a5lu/search/results?limiters=&q=&auth-callid=ced22907-cb29-45df-956d-647702b4fcb4', 'Library Catalog')">Catalog Search</button>
+            <button class="pill-btn" onclick="openNewsModal()">📰 News Publications</button>
             <button class="pill-btn" onclick="openPrintGuide()">How to Print</button>
         </nav>
-
-        <!-- DISTINCT LOCAL NEWSPAPERS CONTAINER CARD -->
-        <section class="newspaper-card" aria-label="Local News Publications">
-            <h2 class="section-label">📰 Local News Publications</h2>
-            <div class="newspaper-row">
-                <button class="pill-btn newspaper-btn" onclick="openPage('https://library.hccs.edu/houston-chronicle-collection', 'Houston Chronicle Collection')">
-                    Houston Chronicle
-                </button>
-                <button class="pill-btn newspaper-btn" onclick="openExternal('https://www.houstonpress.com/')">
-                    Houston Press ↗
-                </button>
-            </div>
-        </section>
 
         <!-- DIGITAL MAGAZINES COLLECTION -->
         <section class="magazine-grid" aria-label="Digital Magazines Collection">
@@ -705,6 +696,36 @@
                 <a id="qr-open-btn" class="modal-action-btn" href="#" target="_blank" rel="noopener noreferrer">
                     🔗 Open in New Tab
                 </a>
+            </div>
+
+            <!-- NEWS PUBLICATIONS CONTAINER MODAL VIEW -->
+            <div id="news-guide-container" class="custom-modal-content">
+                <h2>📰 News Publications</h2>
+                <p class="subheading">Select a publication below. Links open in a separate browser tab so you can easily return to the app.</p>
+                
+                <div class="news-options-grid">
+                    <div class="news-card">
+                        <div>
+                            <span class="badge">Opens in New Tab ↗</span>
+                            <h3>Houston Chronicle Collection</h3>
+                            <p>Access current and historical full-text archives of the Houston Chronicle database.</p>
+                        </div>
+                        <button class="modal-action-btn" onclick="openExternal('https://library.hccs.edu/houston-chronicle-collection')">
+                            Open Houston Chronicle ↗
+                        </button>
+                    </div>
+
+                    <div class="news-card">
+                        <div>
+                            <span class="badge">Opens in New Tab ↗</span>
+                            <h3>Houston Press</h3>
+                            <p>Local coverage of Houston news, arts, dining, culture, and community events.</p>
+                        </div>
+                        <button class="modal-action-btn" onclick="openExternal('https://www.houstonpress.com/')">
+                            Visit Houston Press ↗
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- HOW TO PRINT CONTAINER -->
@@ -813,6 +834,7 @@
         var qrOpenBtn = document.getElementById('qr-open-btn');
         var printGuideContainer = document.getElementById('print-guide-container');
         var installGuideContainer = document.getElementById('install-guide-container');
+        var newsGuideContainer = document.getElementById('news-guide-container');
         var announcer = document.getElementById('a11y-announcer');
         
         var lastFocusedElement; 
@@ -842,6 +864,7 @@
             qrContainer.style.display = 'none';
             printGuideContainer.style.display = 'none';
             installGuideContainer.style.display = 'none';
+            newsGuideContainer.style.display = 'none';
         }
         
         function openPage(url, title) { 
@@ -879,6 +902,17 @@
             qrTitle.innerText = title;
             qrImage.src = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + encodeURIComponent(url);
             qrOpenBtn.href = url;
+
+            modal.style.display = 'flex'; 
+            modal.setAttribute('aria-hidden', 'false');
+            document.querySelector('.close-btn').focus(); 
+        }
+
+        function openNewsModal() {
+            lastFocusedElement = document.activeElement;
+            hideAllModalViews();
+            modalTitle.innerText = "News Publications";
+            newsGuideContainer.style.display = 'block';
 
             modal.style.display = 'flex'; 
             modal.setAttribute('aria-hidden', 'false');
