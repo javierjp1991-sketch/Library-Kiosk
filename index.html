@@ -66,9 +66,9 @@
 
     /* Enhanced Focus rings for Keyboard Navigation */
     :focus-visible {
-        outline: 4px solid #FFC107;
-        outline-offset: 4px;
-        border-radius: 4px;
+        outline: 3px solid #FFC107;
+        outline-offset: 3px;
+        border-radius: 8px;
     }
 
     /* --- 2. INTRO ANIMATION SCREEN --- */
@@ -169,6 +169,7 @@
         align-items: center;
         gap: 6px;
         min-height: 44px;
+        -webkit-tap-highlight-color: transparent;
     }
     .app-corner-btn:hover {
         background-color: rgba(255, 255, 255, 0.3);
@@ -190,6 +191,12 @@
         margin-bottom: 30px;
         min-height: 52px;
         max-width: 100%;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .chat-btn:focus-visible {
+        outline: 3px solid #ffffff;
+        outline-offset: 4px;
+        border-radius: 50px;
     }
 
     /* Horizontal wrapping pill buttons */
@@ -216,10 +223,14 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        -webkit-tap-highlight-color: transparent;
     }
     .pill-btn:hover {
         background-color: rgba(255, 255, 255, 0.3);
         transform: translateY(-2px);
+    }
+    .pill-btn:focus-visible {
+        border-radius: 40px;
     }
 
     /* --- 5. NEWSPAPER SECTION --- */
@@ -227,6 +238,8 @@
         margin-bottom: 35px;
         display: flex;
         justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
     }
 
     .newspaper-btn {
@@ -261,6 +274,7 @@
         border-radius: 6px;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         min-height: 48px;
+        -webkit-tap-highlight-color: transparent;
     }
 
     .magazine-cover-btn img {
@@ -293,6 +307,7 @@
         cursor: pointer;
         transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
         min-height: 48px;
+        -webkit-tap-highlight-color: transparent;
     }
 
     .magazine-box span {
@@ -353,6 +368,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        -webkit-tap-highlight-color: transparent;
     }
     
     iframe { width: 100%; height: 100%; border: none; display: none; }
@@ -583,10 +599,13 @@
             <button class="pill-btn" onclick="openPrintGuide()">How to Print</button>
         </nav>
 
-        <!-- LOCAL NEWSPAPER SECTION (Direct External Tab Launch for Mobile Web App) -->
-        <section class="newspaper-section" aria-label="Local Newspaper Navigation">
-            <button class="pill-btn newspaper-btn" onclick="openExternal('https://infoweb.newsbank.com/apps/news/browse-pub?p=AMNEWS&t=pubname%3AHCWEH%21Houston%2BChronicle%253A%2BWeb%2BEdition%2BArticles%2B%2528TX%2529&action=browse&year=2026')">
-                📰 Houston Chronicle (Recent Issues) ↗
+        <!-- LOCAL NEWSPAPERS SECTION -->
+        <section class="newspaper-section" aria-label="Local News Publications">
+            <button class="pill-btn newspaper-btn" onclick="openExternal('https://infoweb.newsbank.com/apps/news/browse-multi?p=AMNEWS&t=favorite%3A14DB39C1%21Houston%2520Chronicle%2520Collection%2520-%2520Historical%2520and%2520Current&action=browse')">
+                📰 Houston Chronicle Collection ↗
+            </button>
+            <button class="pill-btn newspaper-btn" onclick="openExternal('https://www.houstonpress.com/')">
+                📰 Houston Press ↗
             </button>
         </section>
 
@@ -762,10 +781,8 @@
             screensaver.setAttribute('aria-hidden', 'true');
             menu.style.display = 'block'; 
             menu.setAttribute('aria-hidden', 'false');
-            document.getElementById('main-chat-btn').focus();
         }
 
-        // Direct launch helper function for iframe-restricted external links on mobile
         function openExternal(url) {
             window.open(url, '_blank', 'noopener,noreferrer');
         }
