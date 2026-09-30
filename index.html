@@ -13,7 +13,7 @@
 <meta name="theme-color" content="#003366">
 
 <!-- Inline Web App Manifest for Home Screen Installation -->
-<link rel="manifest" href='data:application/manifest+json,{"name":"The Library Nest","short_name":"LibraryNest","start_url":".","display":"standalone","background_color":"#003366","theme_color":"#003366","icons":[{"src":"./hcc-logo.png","sizes":"192x192","type":"image/jpeg"}]}'>
+<link rel="manifest" href='data:application/manifest+json,{"name":"The Library Nest","short_name":"LibraryNest","start_url":".","display":"standalone","background_color":"#003366","theme_color":"#003366","icons":[{"src":"./hcc-logo.jpg","sizes":"192x192","type":"image/jpeg"}]}'>
 
 <style>
     /* --- 1. GLOBAL RESET & ACCESSIBILITY --- */
@@ -71,7 +71,7 @@
         border-radius: 4px;
     }
 
-    /* --- 2. ADAPTIVE SCREENSAVER --- */
+    /* --- 2. INTRO ANIMATION SCREEN --- */
     #screensaver {
         position: fixed;
         top: 0; left: 0; width: 100vw; height: 100vh;
@@ -96,32 +96,9 @@
         opacity: 1; 
     }
 
-    #screensaver-text {
-        position: absolute;
-        bottom: 10%; 
-        z-index: 5001;
-        font-size: 2rem;
-        font-weight: bold;
-        color: white;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        animation: pulse 2s infinite;
-        background-color: rgba(0,0,0,0.6);
-        padding: 12px 30px;
-        border-radius: 50px;
-        backdrop-filter: blur(4px);
-        text-align: center;
-    }
-
     /* ADA: Respect reduced motion preferences */
     @media (prefers-reduced-motion: reduce) {
-        #screensaver-text { animation: none; }
         * { transition: none !important; animation: none !important; }
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.05); opacity: 0.8; }
-        100% { transform: scale(1); opacity: 1; }
     }
 
     /* --- 3. MAIN MENU --- */
@@ -220,7 +197,7 @@
         display: flex; 
         justify-content: center; 
         gap: 15px; 
-        margin-bottom: 40px; 
+        margin-bottom: 30px; 
         flex-wrap: wrap; 
     }
 
@@ -245,13 +222,35 @@
         transform: translateY(-2px);
     }
 
-    /* --- 5. MAGAZINE GRID --- */
+    /* --- 5. NEWSPAPER SECTION (SEPARATE FROM MAGAZINES) --- */
+    .newspaper-section {
+        margin-bottom: 35px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .newspaper-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid #FFC107;
+        color: #ffffff;
+        font-size: 1.15rem;
+        padding: 14px 28px;
+        border-radius: 30px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .newspaper-btn:hover {
+        background-color: #FFC107;
+        color: #003366;
+        transform: translateY(-2px);
+    }
+
+    /* --- 6. MAGAZINE GRID --- */
     .magazine-grid { 
         display: flex; 
         flex-wrap: wrap; 
         justify-content: center; 
         gap: 16px; 
-        margin-top: 20px; 
+        margin-top: 10px; 
     }
     
     .magazine-cover-btn {
@@ -309,7 +308,7 @@
         transform: translateY(-6px);
     }
 
-    /* --- 6. MODAL & VIEWERS --- */
+    /* --- 7. MODAL & VIEWERS --- */
     #universal-modal {
         display: none;
         position: fixed;
@@ -323,7 +322,7 @@
 
     .modal-box { 
         width: 90%; 
-        max-width: 800px; 
+        max-width: 900px; 
         height: 85vh; 
         padding: 30px; 
         background: white; 
@@ -502,7 +501,7 @@
         background-color: #e0a800;
     }
 
-    /* --- 7. MOBILE RESPONSIVE MEDIA QUERIES --- */
+    /* --- 8. MOBILE RESPONSIVE MEDIA QUERIES --- */
     @media (max-width: 768px) {
         h1 { font-size: 2.2rem; }
         p.subtitle { font-size: 1rem; margin-bottom: 20px; }
@@ -541,12 +540,6 @@
             height: 90vh;
             padding: 20px 15px;
         }
-
-        #screensaver-text {
-            font-size: 1.5rem;
-            padding: 10px 20px;
-            width: 85%;
-        }
     }
 
     @media (max-width: 480px) {
@@ -559,15 +552,14 @@
 <body>
 
     <!-- Accessible Skip Link -->
-    <a href="#menu" class="skip-link">Skip to main content</a>
+    <a href="#menu" class="skip-link">Skip intro to main content</a>
 
-    <!-- Screensaver -->
-    <button id="screensaver" onclick="showMenu()" aria-label="Start Library Nest Experience" tabindex="0">
+    <!-- Intro Screen -->
+    <button id="screensaver" onclick="showMenu()" aria-label="Skip Intro Animation" tabindex="0">
         <picture aria-hidden="true">
             <source media="(max-width: 768px)" srcset="./screensaver2.gif">
-            <img src="./screensaver.gif" alt="">
+            <img src="./screensaver.gif" alt="Library Nest Intro Animation">
         </picture>
-        <div id="screensaver-text" aria-hidden="true">Click to continue</div>
     </button>
 
     <!-- Main Menu Area -->
@@ -578,7 +570,7 @@
                 📱 Save as App
             </button>
 
-            <img src="./hcc-logo.png" alt="Houston Community College Logo" class="brand-logo">
+            <img src="./hcc-logo.jpg" alt="Houston Community College Logo" class="brand-logo">
         </div>
         
         <h1>Welcome to the Library Nest</h1>
@@ -595,6 +587,14 @@
             <button class="pill-btn" onclick="openPrintGuide()">How to Print</button>
         </nav>
 
+        <!-- LOCAL NEWSPAPER SECTION (SEPARATE FROM MAGAZINES) -->
+        <section class="newspaper-section" aria-label="Local Newspaper Navigation">
+            <button class="pill-btn newspaper-btn" onclick="openChronicle()">
+                📰 Houston Chronicle (Recent Issues)
+            </button>
+        </section>
+
+        <!-- DIGITAL MAGAZINES COLLECTION -->
         <section class="magazine-grid" aria-label="Digital Magazines Collection">
             <button class="magazine-cover-btn" aria-label="Read National Geographic Magazine" onclick="openQR('https://flipster.ebsco.com/c/bm4kf4/results?limiters=&type=0&db=eon&q=HJ+NGE&auth-callid=462b1a66-e322-46e9-bfc6-627574c6851ae', 'National Geographic')">
                 <img alt="National Geographic" src="https://d2jv02qf7xgjwx.cloudfront.net/accounts/358453/images/national_geographic.png" />
@@ -626,7 +626,6 @@
     <!-- UNIVERSAL MODAL -->
     <div id="universal-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
         <div class="modal-box">
-            <!-- Dynamic title announced by screen readers when modal opens -->
             <h2 id="modal-title" class="sr-only">Resource Viewer</h2>
             <button class="close-btn" onclick="closeAll()" aria-label="Close dialog modal">✕</button>
             
@@ -682,7 +681,6 @@
                     </li>
                 </ol>
 
-                <!-- EMBEDDED VIDEO TUTORIAL CONTAINER -->
                 <div class="print-video-card">
                     <strong style="color: #003366; font-size: 1.15rem;">Need step-by-step help?</strong>
                     <p style="margin: 5px 0 10px 0; font-size: 0.95rem; color: #333;">
@@ -753,17 +751,22 @@
         var installGuideContainer = document.getElementById('install-guide-container');
         var announcer = document.getElementById('a11y-announcer');
         
-        var idleTimer;
         var lastFocusedElement; 
         var deferredPrompt;
 
+        var INTRO_DURATION_MS = 4000; 
+
+        var introTimer = setTimeout(function() {
+            showMenu();
+        }, INTRO_DURATION_MS);
+
         function showMenu() { 
+            if (introTimer) clearTimeout(introTimer);
             screensaver.style.display = 'none'; 
             screensaver.setAttribute('aria-hidden', 'true');
             menu.style.display = 'block'; 
             menu.setAttribute('aria-hidden', 'false');
             document.getElementById('main-chat-btn').focus();
-            resetTimer(); 
         }
 
         function hideAllModalViews() {
@@ -772,6 +775,7 @@
             qrContainer.style.display = 'none';
             printGuideContainer.style.display = 'none';
             installGuideContainer.style.display = 'none';
+            contentFrame.onload = null; // Clear custom iframe load handlers
         }
         
         function openPage(url, title) { 
@@ -784,7 +788,33 @@
             modal.style.display = 'flex'; 
             modal.setAttribute('aria-hidden', 'false');
             document.querySelector('.close-btn').focus(); 
-            resetTimer(); 
+        }
+
+        // Dedicated Houston Chronicle viewer using your iframe logic
+        function openChronicle() {
+            var url = "https://infoweb.newsbank.com/apps/news/browse-pub?p=AMNEWS&t=pubname%3AHCWEH%21Houston%2BChronicle%253A%2BWeb%2BEdition%2BArticles%2B%2528TX%2529&action=browse&year=2026";
+            lastFocusedElement = document.activeElement;
+            hideAllModalViews();
+            modalTitle.innerText = "Houston Chronicle - Recent Issues";
+            contentFrame.style.display = 'block';
+
+            // Auto-scroll & external target logic
+            contentFrame.onload = function() {
+                try {
+                    contentFrame.contentWindow.scrollTo(0, 480);
+                    var iframeLinks = contentFrame.contentDocument.getElementsByTagName('a');
+                    for (var i = 0; i < iframeLinks.length; i++) {
+                        iframeLinks[i].target = '_blank';
+                    }
+                } catch (e) {
+                    console.log("Cross-origin restriction applies to Houston Chronicle iframe.");
+                }
+            };
+
+            contentFrame.src = url;
+            modal.style.display = 'flex';
+            modal.setAttribute('aria-hidden', 'false');
+            document.querySelector('.close-btn').focus();
         }
 
         function openImage(url, altText) {
@@ -799,7 +829,6 @@
             modal.style.display = 'flex'; 
             modal.setAttribute('aria-hidden', 'false');
             document.querySelector('.close-btn').focus(); 
-            resetTimer(); 
         }
 
         function openQR(url, title) { 
@@ -815,7 +844,6 @@
             modal.style.display = 'flex'; 
             modal.setAttribute('aria-hidden', 'false');
             document.querySelector('.close-btn').focus(); 
-            resetTimer(); 
         }
 
         function openPrintGuide() {
@@ -827,7 +855,6 @@
             modal.style.display = 'flex'; 
             modal.setAttribute('aria-hidden', 'false');
             document.querySelector('.close-btn').focus(); 
-            resetTimer();
         }
 
         function openInstallGuide() {
@@ -846,7 +873,6 @@
             modal.style.display = 'flex'; 
             modal.setAttribute('aria-hidden', 'false');
             document.querySelector('.close-btn').focus(); 
-            resetTimer();
         }
 
         function triggerNativeInstall() {
@@ -871,21 +897,6 @@
             if (lastFocusedElement) {
                 lastFocusedElement.focus();
             }
-            resetTimer(); 
-        }
-
-        function resetToScreensaver() { 
-            menu.style.display = 'none'; 
-            menu.setAttribute('aria-hidden', 'true');
-            closeAll(); 
-            screensaver.style.display = 'flex'; 
-            screensaver.setAttribute('aria-hidden', 'false');
-            announcer.innerText = "Kiosk interface reset to screensaver due to inactivity.";
-        }
-
-        function resetTimer() {
-            clearTimeout(idleTimer);
-            idleTimer = setTimeout(resetToScreensaver, 180000); 
         }
 
         // Native PWA Install Event Listener
@@ -916,10 +927,6 @@
                 }
             }
         });
-
-        document.body.addEventListener('click', resetTimer);
-        document.body.addEventListener('touchstart', resetTimer);
-        document.body.addEventListener('keydown', resetTimer);
     </script>
 </body>
 </html>
