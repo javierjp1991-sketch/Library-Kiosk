@@ -222,7 +222,7 @@
         transform: translateY(-2px);
     }
 
-    /* --- 5. NEWSPAPER SECTION (SEPARATE FROM MAGAZINES) --- */
+    /* --- 5. NEWSPAPER SECTION --- */
     .newspaper-section {
         margin-bottom: 35px;
         display: flex;
@@ -322,7 +322,7 @@
 
     .modal-box { 
         width: 90%; 
-        max-width: 900px; 
+        max-width: 800px; 
         height: 85vh; 
         padding: 30px; 
         background: white; 
@@ -379,7 +379,6 @@
     
     #qr-image { width: 220px; height: 220px; margin-bottom: 15px; max-width: 80%; height: auto; }
 
-    /* Custom Content Modal Layout */
     .custom-modal-content {
         display: none;
         width: 100%;
@@ -412,7 +411,6 @@
         font-size: 1.05rem;
     }
 
-    /* Print Balance Widget Image Styling */
     .print-widget-img {
         max-width: 280px;
         width: 100%;
@@ -446,12 +444,11 @@
         align-items: center;
     }
 
-    /* Responsive 16:9 Video Wrapper */
     .video-wrapper {
         position: relative;
         width: 100%;
         max-width: 640px;
-        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        padding-bottom: 56.25%;
         height: 0;
         margin-top: 15px;
         border-radius: 8px;
@@ -565,7 +562,6 @@
     <!-- Main Menu Area -->
     <main id="menu" aria-hidden="true">
         <div class="header-bar">
-            <!-- Discreet App Install Button -->
             <button class="app-corner-btn" onclick="openInstallGuide()" aria-label="Save web app to home screen">
                 📱 Save as App
             </button>
@@ -587,9 +583,9 @@
             <button class="pill-btn" onclick="openPrintGuide()">How to Print</button>
         </nav>
 
-        <!-- LOCAL NEWSPAPER SECTION (SEPARATE FROM MAGAZINES) -->
+        <!-- LOCAL NEWSPAPER SECTION -->
         <section class="newspaper-section" aria-label="Local Newspaper Navigation">
-            <button class="pill-btn newspaper-btn" onclick="openChronicle()">
+            <button class="pill-btn newspaper-btn" onclick="openPage('https://infoweb.newsbank.com/apps/news/browse-pub?p=AMNEWS&t=pubname%3AHCWEH%21Houston%2BChronicle%253A%2BWeb%2BEdition%2BArticles%2B%2528TX%2529&action=browse&year=2026', 'Houston Chronicle (Recent Issues)')">
                 📰 Houston Chronicle (Recent Issues)
             </button>
         </section>
@@ -617,7 +613,7 @@
             <button class="magazine-cover-btn" aria-label="Read Essence Magazine" onclick="openQR('https://flipster.ebsco.com/c/bm4kf4/results?limiters=&type=0&db=eon&q=HJ+B3JY&auth-callid=c34132d8-5f08-4575-9995-276dbb40dd3b', 'Essence')">
                 <img alt="Essence" src="https://d2jv02qf7xgjwx.cloudfront.net/accounts/358453/images/essence.png" />
             </button>
-            <button class="magazine-box" aria-label="View All Magazines Collection" onclick="openQR('https://flipster.ebsco.com/c/bm4kf4', 'All Magazines')">
+            <button class="magazine-box" aria-label="View All Magazines Collection" onclick="openQR('https://flipster.ebsco.com', 'All Magazines')">
                 <span>View All Magazines</span>
             </button>
         </section>
@@ -637,7 +633,7 @@
             <div id="qr-container">
                 <img id="qr-image" src="" alt="QR code to access selected resource on mobile device">
                 <h2 id="qr-title" style="color:#003366; margin-bottom:5px;">Scan to Open</h2>
-                <p style="color:#444; font-size:1.1rem; margin-bottom:10px;">Use your phone camera to scan.</p>
+                <p style="color:#444; font-size:1.1rem; margin-bottom:10px;">Use your phone camera or click below to launch in a new tab.</p>
                 <a id="qr-open-btn" class="modal-action-btn" href="#" target="_blank" rel="noopener noreferrer">
                     🔗 Open in New Tab
                 </a>
@@ -775,7 +771,6 @@
             qrContainer.style.display = 'none';
             printGuideContainer.style.display = 'none';
             installGuideContainer.style.display = 'none';
-            contentFrame.onload = null; // Clear custom iframe load handlers
         }
         
         function openPage(url, title) { 
@@ -788,33 +783,6 @@
             modal.style.display = 'flex'; 
             modal.setAttribute('aria-hidden', 'false');
             document.querySelector('.close-btn').focus(); 
-        }
-
-        // Dedicated Houston Chronicle viewer using your iframe logic
-        function openChronicle() {
-            var url = "https://infoweb.newsbank.com/apps/news/browse-pub?p=AMNEWS&t=pubname%3AHCWEH%21Houston%2BChronicle%253A%2BWeb%2BEdition%2BArticles%2B%2528TX%2529&action=browse&year=2026";
-            lastFocusedElement = document.activeElement;
-            hideAllModalViews();
-            modalTitle.innerText = "Houston Chronicle - Recent Issues";
-            contentFrame.style.display = 'block';
-
-            // Auto-scroll & external target logic
-            contentFrame.onload = function() {
-                try {
-                    contentFrame.contentWindow.scrollTo(0, 480);
-                    var iframeLinks = contentFrame.contentDocument.getElementsByTagName('a');
-                    for (var i = 0; i < iframeLinks.length; i++) {
-                        iframeLinks[i].target = '_blank';
-                    }
-                } catch (e) {
-                    console.log("Cross-origin restriction applies to Houston Chronicle iframe.");
-                }
-            };
-
-            contentFrame.src = url;
-            modal.style.display = 'flex';
-            modal.setAttribute('aria-hidden', 'false');
-            document.querySelector('.close-btn').focus();
         }
 
         function openImage(url, altText) {
