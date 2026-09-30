@@ -13,7 +13,7 @@
 <meta name="theme-color" content="#003366">
 
 <!-- Inline Web App Manifest for Home Screen Installation -->
-<link rel="manifest" href='data:application/manifest+json,{"name":"The Library Nest","short_name":"LibraryNest","start_url":".","display":"standalone","background_color":"#003366","theme_color":"#003366","icons":[{"src":"./hcc-logo.png","sizes":"192x192","type":"image/jpeg"}]}'>
+<link rel="manifest" href='data:application/manifest+json,{"name":"The Library Nest","short_name":"LibraryNest","start_url":".","display":"standalone","background_color":"#003366","theme_color":"#003366","icons":[{"src":"./hcc-logo.jpg","sizes":"192x192","type":"image/jpeg"}]}'>
 
 <style>
     /* --- 1. GLOBAL RESET & ACCESSIBILITY --- */
@@ -566,7 +566,7 @@
                 📱 Save as App
             </button>
 
-            <img src="./hcc-logo.png" alt="Houston Community College Logo" class="brand-logo">
+            <img src="./hcc-logo.jpg" alt="Houston Community College Logo" class="brand-logo">
         </div>
         
         <h1>Welcome to the Library Nest</h1>
@@ -583,10 +583,10 @@
             <button class="pill-btn" onclick="openPrintGuide()">How to Print</button>
         </nav>
 
-        <!-- LOCAL NEWSPAPER SECTION -->
+        <!-- LOCAL NEWSPAPER SECTION (Direct External Tab Launch for Mobile Web App) -->
         <section class="newspaper-section" aria-label="Local Newspaper Navigation">
-            <button class="pill-btn newspaper-btn" onclick="openPage('https://infoweb.newsbank.com/apps/news/browse-pub?p=AMNEWS&t=pubname%3AHCWEH%21Houston%2BChronicle%253A%2BWeb%2BEdition%2BArticles%2B%2528TX%2529&action=browse&year=2026', 'Houston Chronicle (Recent Issues)')">
-                📰 Houston Chronicle (Recent Issues)
+            <button class="pill-btn newspaper-btn" onclick="openExternal('https://infoweb.newsbank.com/apps/news/browse-pub?p=AMNEWS&t=pubname%3AHCWEH%21Houston%2BChronicle%253A%2BWeb%2BEdition%2BArticles%2B%2528TX%2529&action=browse&year=2026')">
+                📰 Houston Chronicle (Recent Issues) ↗
             </button>
         </section>
 
@@ -763,6 +763,11 @@
             menu.style.display = 'block'; 
             menu.setAttribute('aria-hidden', 'false');
             document.getElementById('main-chat-btn').focus();
+        }
+
+        // Direct launch helper function for iframe-restricted external links on mobile
+        function openExternal(url) {
+            window.open(url, '_blank', 'noopener,noreferrer');
         }
 
         function hideAllModalViews() {
