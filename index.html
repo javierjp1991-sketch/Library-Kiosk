@@ -976,10 +976,28 @@
         }
 
         // Native PWA Install Event Listener
+        // Keep the browser's own install prompt, but also save the event so the
+        // "Install Directly to Device" button in the guide can trigger it later.
         window.addEventListener('beforeinstallprompt', function(e) {
-            e.preventDefault();
             deferredPrompt = e;
+            var pwaBtn = document.getElementById('pwa-install-btn');
+            if (pwaBtn) pwaBtn.style.display = 'inline-block';
         });
+
+        window.addEventListener('appinstalled', function() {
+            deferredPrompt = null;
+            var pwaBtn = document.getElementById('pwa-install-btn');
+            if (pwaBtn) pwaBtn.style.display = 'none';
+        });
+
+        // Service worker is required by some browsers before they offer to install
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').catch(function(err) {
+                    console.log('Service worker registration failed:', err);
+                });
+            });
+        }
 
         // Accessible Modal Keyboard Trapping & ESC key close
         modal.addEventListener('keydown', function(e) {
