@@ -146,7 +146,7 @@
     p.subtitle { 
         font-size: 1.2rem; 
         color: #e0e0e0; 
-        margin-bottom: 30px; 
+        margin-bottom: 25px; 
         letter-spacing: 0.5px; 
     }
 
@@ -188,7 +188,7 @@
         border-radius: 50px;
         cursor: pointer;
         box-shadow: 0 4px 20px rgba(255, 193, 7, 0.5);
-        margin-bottom: 30px;
+        margin-bottom: 25px;
         min-height: 52px;
         max-width: 100%;
         -webkit-tap-highlight-color: transparent;
@@ -229,13 +229,28 @@
         background-color: rgba(255, 255, 255, 0.3);
         transform: translateY(-2px);
     }
-    .pill-btn:focus-visible {
-        border-radius: 40px;
+
+    /* --- 5. NEWSPAPER CARD SECTION --- */
+    .newspaper-card {
+        background: rgba(0, 0, 0, 0.22);
+        border: 1px solid rgba(255, 193, 7, 0.4);
+        border-radius: 20px;
+        padding: 20px 25px;
+        margin: 0 auto 35px auto;
+        max-width: 750px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
-    /* --- 5. NEWSPAPER SECTION --- */
-    .newspaper-section {
-        margin-bottom: 35px;
+    .section-label {
+        font-size: 1.15rem;
+        font-weight: bold;
+        color: #FFC107;
+        margin: 0 0 15px 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .newspaper-row {
         display: flex;
         justify-content: center;
         gap: 15px;
@@ -246,8 +261,8 @@
         background: rgba(255, 255, 255, 0.2);
         border: 2px solid #FFC107;
         color: #ffffff;
-        font-size: 1.15rem;
-        padding: 14px 28px;
+        font-size: 1.05rem;
+        padding: 12px 24px;
         border-radius: 30px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
@@ -526,6 +541,37 @@
             margin-bottom: 15px;
         }
 
+        /* Clean vertical stacking on phone screens */
+        .pill-row {
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .pill-btn {
+            width: 100%;
+            max-width: 340px;
+        }
+
+        .newspaper-card {
+            padding: 18px 12px;
+            margin-bottom: 25px;
+            width: 100%;
+            max-width: 360px;
+        }
+
+        .newspaper-row {
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .newspaper-btn {
+            width: 100%;
+            max-width: 320px;
+        }
+
         .chat-btn {
             font-size: 1.2rem;
             padding: 14px 24px;
@@ -599,14 +645,17 @@
             <button class="pill-btn" onclick="openPrintGuide()">How to Print</button>
         </nav>
 
-        <!-- LOCAL NEWSPAPERS SECTION -->
-        <section class="newspaper-section" aria-label="Local News Publications">
-            <button class="pill-btn newspaper-btn" onclick="openExternal('https://infoweb.newsbank.com/apps/news/browse-multi?p=AMNEWS&t=favorite%3A14DB39C1%21Houston%2520Chronicle%2520Collection%2520-%2520Historical%2520and%2520Current&action=browse')">
-                📰 Houston Chronicle Collection ↗
-            </button>
-            <button class="pill-btn newspaper-btn" onclick="openExternal('https://www.houstonpress.com/')">
-                📰 Houston Press ↗
-            </button>
+        <!-- DISTINCT LOCAL NEWSPAPERS CONTAINER CARD -->
+        <section class="newspaper-card" aria-label="Local News Publications">
+            <h2 class="section-label">📰 Local News Publications</h2>
+            <div class="newspaper-row">
+                <button class="pill-btn newspaper-btn" onclick="openPage('https://library.hccs.edu/houston-chronicle-collection', 'Houston Chronicle Collection')">
+                    Houston Chronicle
+                </button>
+                <button class="pill-btn newspaper-btn" onclick="openExternal('https://www.houstonpress.com/')">
+                    Houston Press ↗
+                </button>
+            </div>
         </section>
 
         <!-- DIGITAL MAGAZINES COLLECTION -->
